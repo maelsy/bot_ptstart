@@ -1,29 +1,29 @@
 all:
   hosts:
     hostBotMasterDB:
-      ansible_user: ansible
-      ansible_ssh_pass: ansible
-      ansible_host: 192.168.0.63
+      ansible_user: # Имя пользователя под чъим именем Ansible будет настраивать хосты, должен иметь NOPASSWD:ALL права
+      ansible_ssh_pass: # Пароль этого пользователя
+      ansible_host: # Ip address совпадает с DB_HOST и RM_HOST
 
-    hostReplicaDB:
-      ansible_user: ansible
-      ansible_ssh_pass: ansible
-      ansible_host: 192.168.0.58
+    hostReplicaDB: 
+      ansible_user: # Имя пользователя под чъим именем Ansible будет настраивать хосты, должен иметь NOPASSWD:ALL права
+      ansible_ssh_pass: # Пароль этого пользователя
+      ansible_host: # Ip address совпадает с DB_REPL_HOST
 
   vars:
-    DB_REPL_HOST: 192.168.0.58
+    DB_REPL_HOST: # Ip address машинки, где будет SLAVEDB 
     DB_REPL_USER: repl_user
     DB_REPL_PASSWORD: Qq12345
     DB_REPL_PORT: 5432
-    DB_HOST: 192.168.0.63
+    DB_HOST: # Ip address машинки, где будет MASTERDB. Совпадает с RM_HOST
     DB_PORT: 5432
     DB_USER: postgres
     DB_PASSWORD: Qq12345
     DB_DATABASE: db_bot
-    TOKEN: 7021850068:AAFzWXsA_h5F1wDpJ-iU989L_OWt25r1knQ
-    RM_HOST: 192.168.0.63
-    RM_PORT: 22
-    RM_USER: vkyrlan
-    RM_PASSWORD: ubuntu
+    TOKEN: # Токен можно взять из письма или отчета
+    RM_HOST: # Ip address машинки, где будет бот и с короторй будут собираться метрики, совпадает и DB_HOST
+    RM_PORT: # Порт для ssh
+    RM_USER: # Имя пользователя машинки, где бот и MASTERDB
+    RM_PASSWORD: # Пароль пользователя
   
 
