@@ -1,0 +1,64 @@
+version: "3"
+services:
+  bot:
+    image: bot_image
+    build:
+      context: ./bot
+    environment:
+      - TOKEN=${TOKEN}
+      - RM_HOST=${RM_HOST}
+      - RM_PORT=${RM_PORT}
+      - RM_USER=${RM_USER}
+      - RM_PASSWORD=${RM_PASSWORD}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_DATABASE=${DB_DATABASE}
+    volumes:
+      - pg_logs:/var/log/
+    container_name: bot
+    depends_on:
+      - db
+    networks:
+      - my_network
+
+  db:
+    image: db_image
+    build: ./db_prim
+    volumes:
+      - pg_logs:/var/log/
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - DB_REPL_USER=${DB_REPL_USER}
+      - DB_REPL_PASSWORD=${DB_REPL_PASSWORD}
+      - DB_REPL_HOST=db_repl
+      - DB_PORT=${DB_PORT}
+      - DB_DATABASE=${DB_DATABASE}
+    container_name: db
+    networks:
+      - my_network
+
+  db_repl:
+    image: db_repl_image
+    build: ./db_repl
+    container_name: db_repl
+    environment:
+      - DB_HOST=db
+      - DB_PORT=${DB_PORT}
+      - DB_REPL_HOST=db_repl
+      - DB_REPL_PORT=${DB_REPL_PORT}
+      - DB_REPL_USER=${DB_REPL_USER}
+      - DB_REPL_PASSWORD=${DB_REPL_PASSWORD}
+    networks:
+      - my_network
+    depends_on:
+      - db
+
+volumes:
+  pg_data:
+  pg_logs:
+
+networks:
+  my_network:
