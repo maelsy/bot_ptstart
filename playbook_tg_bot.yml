@@ -223,7 +223,7 @@
 
     - name: Create working directory
       file:
-        path: /home/ansible/bot
+        path: etc/bot_vkyrlan
         owner: ansible
         group: ansible
         state: directory
@@ -232,11 +232,11 @@
     - name: get a git repository
       git:
         repo: https://github.com/maelsy/bot
-        dest: /home/ansible/bot
+        dest: etc/bot_vkyrlan
         version: main
 
     - name: Run Bot
-      command: python3 /home/ansible/bot/kv_ptStartBot.py
+      command: python3 etc/bot_vkyrlan/kv_ptStartBot.py
       environment:
         TOKEN: "{{ hostvars[inventory_hostname]['TOKEN'] }}"
         DB_HOST: "{{ hostvars[inventory_hostname]['DB_HOST'] }}"
