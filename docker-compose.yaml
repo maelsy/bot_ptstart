@@ -25,7 +25,7 @@ services:
 
   db:
     image: db_image
-    build: ./db_prim
+    build: ./db
     volumes:
       - pg_logs:/var/log/
     environment:
